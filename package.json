@@ -1,0 +1,19 @@
+{
+  "name": "cookbook-v2",
+  "version": "1.0.0",
+  "description": "Backend for cookbook app",
+  "main": "server.js",
+  "scripts": {
+    "start": "NODE_ENV=production node server",
+    "dev": "nodemon server"
+  },
+  "author": "Chris Legassick",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
