@@ -1,3 +1,4 @@
+const ErrorResponse = require('../utils/errorResponse');
 const Recipe = require('../models/Recipe');
 
 // @desc    Get all recipes
@@ -34,6 +35,27 @@ exports.createRecipe = async (req, res, next) => {
     res.status(400).json({
       success: false
     });
+  }
+};
+
+// Get single recipe by ID - error handler test
+exports.getRecipe = async (req, res, next) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+    if (!recipe) {
+      return next(
+        new ErrorResponse(`Recipe not found with id of ${req.params.id}`, 404)
+      );
+    }
+
+    res.status(200).json({
+      success: true,
+      data: recipe
+    });
+  } catch (err) {
+    next(
+      new ErrorResponse(`Recipe not found with id of ${req.params.id}`, 404)
+    );
   }
 };
 
