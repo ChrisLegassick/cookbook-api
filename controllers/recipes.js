@@ -9,6 +9,7 @@ exports.getRecipes = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
+      count: recipes.length,
       data: recipes
     });
   } catch (err) {
