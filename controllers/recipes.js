@@ -14,9 +14,28 @@ exports.getRecipes = async (req, res, next) => {
       data: recipes
     });
   } catch (err) {
-    res.status(400).json({
-      success: false
+    next(err);
+  }
+};
+
+// @desc    Get single recipe by id
+// @route   GET /api/v1/recipes/:id
+// @access  Public
+exports.getRecipe = async (req, res, next) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+    if (!recipe) {
+      return next(
+        new ErrorResponse(`Recipe not found with id of ${req.params.id}`, 404)
+      );
+    }
+
+    res.status(200).json({
+      success: true,
+      data: recipe
     });
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -32,30 +51,7 @@ exports.createRecipe = async (req, res, next) => {
       data: recipe
     });
   } catch (err) {
-    res.status(400).json({
-      success: false
-    });
-  }
-};
-
-// Get single recipe by ID - error handler test
-exports.getRecipe = async (req, res, next) => {
-  try {
-    const recipe = await Recipe.findById(req.params.id);
-    if (!recipe) {
-      return next(
-        new ErrorResponse(`Recipe not found with id of ${req.params.id}`, 404)
-      );
-    }
-
-    res.status(200).json({
-      success: true,
-      data: recipe
-    });
-  } catch (err) {
-    next(
-      new ErrorResponse(`Recipe not found with id of ${req.params.id}`, 404)
-    );
+    next(err);
   }
 };
 
