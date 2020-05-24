@@ -1,10 +1,10 @@
 const express = require('express');
 const {
   getRecipes,
+  getRecipe,
   createRecipe,
-  // getRecipe used for testing
-  getRecipe
-  // deleteRecipe - add in later version
+  updateRecipe,
+  deleteRecipe
 } = require('../controllers/recipes');
 const router = express.Router();
 
@@ -13,8 +13,10 @@ router
   .get(getRecipes)
   .post(createRecipe);
 
-// router.route('/:id').delete(deleteRecipe); - add in later version
-// getRecipe used for testing
-router.route('/:id').get(getRecipe);
+router
+  .route('/:id')
+  .get(getRecipe)
+  .put(updateRecipe)
+  .delete(deleteRecipe);
 
 module.exports = router;

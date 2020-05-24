@@ -55,11 +55,49 @@ exports.createRecipe = async (req, res, next) => {
   }
 };
 
-// @desc    Delete recipe - add in later version
+// @desc    Update recipe
+// @route   PUT /api/v1/recipes/:id
+// @access  Private
+exports.updateRecipe = async (req, res, next) => {
+  try {
+    const recipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
+
+    if (!recipe) {
+      return next(
+        new ErrorResponse(`Recipe not found with id of ${req.params.id}`, 404)
+      );
+    }
+
+    res.status(200).json({
+      success: true,
+      data: recipe
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// @desc    Delete recipe
 // @route   DELETE /api/v1/recipes/:id
 // @access  Private
-// exports.deleteRecipe = (req, res, next) => {
-//   res
-//     .status(200)
-//     .json({ success: true, msg: `Delete recipe ${req.params.id}` });
-// };
+exports.deleteRecipe = async (req, res, next) => {
+  try {
+    const recipe = await Recipe.findByIdAndDelete(req.params.id);
+
+    if (!recipe) {
+      return next(
+        new ErrorResponse(`Recipe not found with id of ${req.params.id}`, 404)
+      );
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {}
+    });
+  } catch (err) {
+    next(err);
+  }
+};
