@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const RecipeSchema = new mongoose.Schema({
   name: {
@@ -18,6 +19,11 @@ const RecipeSchema = new mongoose.Schema({
     type: String,
     default: 'no-photo.jpg'
   }
+});
+
+RecipeSchema.pre('save', function(next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
 });
 
 module.exports = mongoose.model('Recipe', RecipeSchema);
