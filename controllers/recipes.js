@@ -6,7 +6,7 @@ const Recipe = require('../models/Recipe');
 // @route   GET /api/v1/recipes
 // @access  Public
 exports.getRecipes = asyncHandler(async (req, res, next) => {
-  const recipes = await Recipe.find();
+  const recipes = await Recipe.find(req.query);
 
   res.status(200).json({
     success: true,
