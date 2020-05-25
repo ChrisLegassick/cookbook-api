@@ -12,8 +12,7 @@ const RecipeSchema = new mongoose.Schema({
     required: [true, 'Please add some instructions']
   },
   ingredients: {
-    type: [String],
-    required: true
+    type: [String]
   },
   photo: {
     type: String,
