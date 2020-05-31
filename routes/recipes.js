@@ -2,6 +2,7 @@ const express = require('express');
 const {
   getRecipes,
   getRecipe,
+  getRandomRecipe,
   createRecipe,
   updateRecipe,
   deleteRecipe
@@ -12,6 +13,8 @@ router
   .route('/')
   .get(getRecipes)
   .post(createRecipe);
+
+router.route('/random').get(getRandomRecipe);
 
 router
   .route('/:id')

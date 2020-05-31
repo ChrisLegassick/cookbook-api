@@ -32,6 +32,18 @@ exports.getRecipe = asyncHandler(async (req, res, next) => {
   });
 });
 
+// @desc    Get random recipe
+// @route   GET /api/v1/recipes/random
+// @access  Public
+exports.getRandomRecipe = asyncHandler(async (req, res, next) => {
+  const recipe = await Recipe.aggregate([{ $sample: { size: 1 } }]);
+
+  res.status(200).json({
+    success: true,
+    data: recipe
+  });
+});
+
 // @desc    Create new recipe
 // @route   POST /api/v1/recipes
 // @access  Private
