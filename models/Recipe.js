@@ -22,10 +22,9 @@ const RecipeSchema = new mongoose.Schema({
   }
 });
 
-// Revisit later - slugs should/must be unique however recipes can share the same name
-RecipeSchema.pre('save', function(next) {
-  this.slug = slugify(this.name, { lower: true });
-  next();
-});
+// RecipeSchema.pre('save', function(next) {
+//   this.slug = slugify(this.name, { lower: true });
+//   next();
+// });
 
 module.exports = mongoose.model('Recipe', RecipeSchema);
