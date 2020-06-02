@@ -11,9 +11,9 @@ dotenv.config({ path: './config/config.env' });
 
 connectDB();
 
-app.use(cors());
-
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 
