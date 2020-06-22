@@ -8,7 +8,7 @@ const Recipe = require('../models/Recipe');
 exports.getRecipes = asyncHandler(async (req, res, next) => {
   // const recipes = await Recipe.find(req.query);
 
-  const re = new RegExp(req.query.name);
+  const re = new RegExp(req.query.name, 'gi');
 
   const recipes = await Recipe.find({ name: { $regex: re } });
 
