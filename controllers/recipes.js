@@ -6,7 +6,11 @@ const Recipe = require('../models/Recipe');
 // @route   GET /api/v1/recipes
 // @access  Public
 exports.getRecipes = asyncHandler(async (req, res, next) => {
-  const recipes = await Recipe.find(req.query);
+  // const recipes = await Recipe.find(req.query);
+
+  const re = new RegExp(req.query.name);
+
+  const recipes = await Recipe.find({ name: { $regex: re } });
 
   res.status(200).json({
     success: true,
