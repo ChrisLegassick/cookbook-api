@@ -9,17 +9,19 @@ const {
 } = require('../controllers/recipes');
 const router = express.Router();
 
+const { protect, authorize } = require('../middleware/auth');
+
 router
   .route('/')
   .get(getRecipes)
-  .post(createRecipe);
+  .post(protect, authorize('admin', 'user'), createRecipe);
 
 router.route('/random').get(getRandomRecipe);
 
 router
   .route('/:id')
   .get(getRecipe)
-  .put(updateRecipe)
-  .delete(deleteRecipe);
+  .put(protect, authorize('admin'), updateRecipe)
+  .delete(protect, authorize('admin'), deleteRecipe);
 
 module.exports = router;
