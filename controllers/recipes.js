@@ -52,6 +52,8 @@ exports.getRandomRecipe = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/recipes
 // @access  Private
 exports.createRecipe = asyncHandler(async (req, res, next) => {
+  req.body.user = req.user.id;
+
   const recipe = await Recipe.create(req.body);
 
   res.status(201).json({
@@ -64,16 +66,27 @@ exports.createRecipe = asyncHandler(async (req, res, next) => {
 // @route   PUT /api/v1/recipes/:id
 // @access  Private
 exports.updateRecipe = asyncHandler(async (req, res, next) => {
-  const recipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true
-  });
+  let recipe = await Recipe.findById(req.params.id);
 
   if (!recipe) {
     return next(
       new ErrorResponse(`Recipe not found with id of ${req.params.id}`, 404)
     );
   }
+
+  if (recipe.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `User ${req.user.id} is not authorized to update this recipe`,
+        401
+      )
+    );
+  }
+
+  recipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true
+  });
 
   res.status(200).json({
     success: true,
@@ -85,13 +98,24 @@ exports.updateRecipe = asyncHandler(async (req, res, next) => {
 // @route   DELETE /api/v1/recipes/:id
 // @access  Private
 exports.deleteRecipe = asyncHandler(async (req, res, next) => {
-  const recipe = await Recipe.findByIdAndDelete(req.params.id);
+  let recipe = await Recipe.findById(req.params.id);
 
   if (!recipe) {
     return next(
       new ErrorResponse(`Recipe not found with id of ${req.params.id}`, 404)
     );
   }
+
+  if (recipe.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(
+      new ErrorResponse(
+        `User ${req.user.id} is not authorized to delete this recipe`,
+        401
+      )
+    );
+  }
+
+  recipe = await Recipe.findByIdAndDelete(req.params.id);
 
   res.status(200).json({
     success: true,

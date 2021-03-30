@@ -15,6 +15,11 @@ const RecipeSchema = new mongoose.Schema({
   ingredients: {
     type: [String]
   },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true
+  },
   photo: {
     type: String,
     default: 'no-photo.jpg'

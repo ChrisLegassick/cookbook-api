@@ -21,7 +21,7 @@ router.route('/random').get(getRandomRecipe);
 router
   .route('/:id')
   .get(getRecipe)
-  .put(protect, authorize('admin'), updateRecipe)
-  .delete(protect, authorize('admin'), deleteRecipe);
+  .put(protect, authorize('admin', 'user'), updateRecipe)
+  .delete(protect, authorize('admin', 'user'), deleteRecipe);
 
 module.exports = router;
