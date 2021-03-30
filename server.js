@@ -32,7 +32,7 @@ app.use(xssClean());
 
 app.use(hpp());
 
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 
 app.use('/api/v1/recipes', recipes);
 app.use('/api/v1/auth', auth);
