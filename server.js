@@ -32,9 +32,7 @@ app.use(xssClean());
 
 app.use(hpp());
 
-app.use(
-  cors({ origin: 'https://legassick-recipe.netlify.app', credentials: true })
-);
+app.use(cors());
 
 app.use('/api/v1/recipes', recipes);
 app.use('/api/v1/auth', auth);
