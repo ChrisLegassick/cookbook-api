@@ -32,7 +32,22 @@ app.use(xssClean());
 
 app.use(hpp());
 
-app.use(cors());
+const corsOptions = {
+  allowedHeaders: [
+    'Origin',
+    'X-Requested-With',
+    'Content-Type',
+    'Accept',
+    'X-Access-Token',
+    'Authorization'
+  ],
+  credentials: true,
+  methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
+  origin: 'https://legassick-recipe.netlify.app',
+  preflightContinue: false
+};
+
+app.use(cors(corsOptions));
 
 app.use('/api/v1/recipes', recipes);
 app.use('/api/v1/auth', auth);
