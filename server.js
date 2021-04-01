@@ -33,8 +33,8 @@ app.use(xssClean());
 app.use(hpp());
 
 const corsOptions = {
-  credentials: true
-  // origin: 'https://legassick-recipe.netlify.app'
+  credentials: true,
+  origin: ['https://legassick-recipe.netlify.app', 'http://localhost:3000']
   // exposedHeaders: ['Set-Cookie'],
   // allowedHeaders: [
   //   'Authorization',
