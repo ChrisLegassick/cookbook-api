@@ -101,7 +101,7 @@ const sendTokenResponse = (user, statusCode, res) => {
 
   if (process.env.NODE_ENV === 'production') {
     options.secure = true;
-    options.siteName = 'none';
+    options.sameSite = 'none';
   }
 
   res
