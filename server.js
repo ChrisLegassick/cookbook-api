@@ -43,7 +43,8 @@ const corsOptions = {
     'account-id',
     'X-Requested-With',
     'Accept',
-    'Origin'
+    'Origin',
+    'Set-Cookie'
   ]
 };
 
