@@ -101,12 +101,11 @@ const sendTokenResponse = (user, statusCode, res) => {
 
   if (process.env.NODE_ENV === 'production') {
     options.secure = true;
-    options.sameSite = none;
   }
 
   res
     .status(statusCode)
-    .cookie('token', token, options)
+    .cookie('token', token, options, (sameSite = 'none'))
     .json({
       success: true,
       token
